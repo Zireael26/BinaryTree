@@ -66,4 +66,23 @@ public class BinaryTree {
     public boolean isEmpty() {
         return (this.size() == 0);
     }
+
+    public void display() {
+        this.display(this.root);
+    }
+
+    private void display(Node node) { // expectation is that this function will display the whole binary tree as: left child -> node <- right child
+        if(node == null) { // if there are no children, return
+            return;
+        }
+        String outputString = "";
+        outputString += node.left != null ? node.left.data:"."; // if node.left is not null, add data to string, else add full stop
+        outputString += " -> " + node.data + " <- ";
+        outputString += node.right != null ? node.right.data:"."; // if node.left is not null, add data to string, else add full stop
+
+        System.out.println(outputString);
+
+        this.display(node.left); //faith in left child
+        this.display(node.right); // faith in right child
+    }
 }
