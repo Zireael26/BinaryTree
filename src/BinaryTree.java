@@ -85,4 +85,19 @@ public class BinaryTree {
         this.display(node.left); //faith in left child
         this.display(node.right); // faith in right child
     }
+
+    public int getSize(){ // method to calculate size, if we don't have a size variable
+        return this.getSize(this.root);
+    }
+
+    private int getSize(Node node) {  //  expectation is that the method will count and return the size of the tree
+        if (node == null) { // base case, if node is null, its size is 0
+            return 0;
+        }
+
+        int leftSize = this.getSize(node.left); // faith that we will get size of left subtree
+        int rightSize = this.getSize(node.right); // faith that we will get size of right subtree
+
+        return (leftSize + rightSize + 1); // so actual size will be leftSize + rightSize + 1 (for the root node itself)
+    }
 }
