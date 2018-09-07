@@ -133,4 +133,30 @@ public class BinaryTree {
         // and max(0, 0) + 1 = 1 when counting by nodes
         return (Math.max(leftHeight, rightHeight) + 1);
     }
+
+    public boolean find(int key) {
+        return this.find(this.root, key);
+    }
+
+    private boolean find(Node node, int key) {
+        if (node == null) { // base case for when you hit leaf nodes
+            return false;
+        }
+
+        if (node.data == key) { // if key is found in the root node itself
+            return true;
+        }
+
+        boolean foundInLeftChild = this.find(node.left, key); // faith that this call will find the key in left subtree
+        if (foundInLeftChild) {
+            return true;
+        }
+
+        boolean foundInRightChild = this.find(node.right, key); // faith that this call will find the key in right subtree
+        if (foundInRightChild) {
+            return true;
+        }
+
+        return false;
+    }
 }
