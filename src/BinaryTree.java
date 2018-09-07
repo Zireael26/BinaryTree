@@ -100,4 +100,21 @@ public class BinaryTree {
 
         return (leftSize + rightSize + 1); // so actual size will be leftSize + rightSize + 1 (for the root node itself)
     }
+
+    public int max() {
+        return this.max(this.root);
+    }
+
+    private int max(Node node) { // expectation is that this function returns the max of the given tree
+
+        if (node == null) { // base case, if node is null, it shouldn't make a contribution to max
+            return Integer.MIN_VALUE;
+        }
+
+        int leftMax = this.max(node.left); // faith that this call returns max of left subtree
+        int rightMax = this.max(node.right); // faith that this call returns the max of right subtree
+
+        // simply compare the three values of node.data, leftMax, rightMax using Math.max()
+        return Math.max(node.data, Math.max(leftMax, rightMax));
+    }
 }
