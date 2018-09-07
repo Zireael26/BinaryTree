@@ -9,5 +9,6 @@ public class Main {
 
         System.out.println("Calculated Size: " + binaryTree.getSize());
         System.out.println("Maximum element of the entered tree is: " + binaryTree.max());
+        System.out.println("Height of the Binary tree is: " + binaryTree.height());
     }
 }

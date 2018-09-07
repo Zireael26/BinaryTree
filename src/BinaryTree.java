@@ -117,4 +117,20 @@ public class BinaryTree {
         // simply compare the three values of node.data, leftMax, rightMax using Math.max()
         return Math.max(node.data, Math.max(leftMax, rightMax));
     }
+
+    public int height() { // max depth (how far is its deepest node), depth =  number of edges away from root
+        return this.height(this.root);
+    }
+
+    private int height(Node node) {
+        if (node == null) {
+            return -1; // return -1 if height is counted by edges, or 0 if height is counted by nodes
+        }
+
+        int leftHeight = this.height(node.left); // faith that it will return the height of the left subtree
+        int rightHeight = this.height(node.right); // faith that it will return the right subtree
+        // for every leaf node, the comparison below will return max(-1, -1) + 1 = 0 when counting by edges
+        // and max(0, 0) + 1 = 1 when counting by nodes
+        return (Math.max(leftHeight, rightHeight) + 1);
+    }
 }
