@@ -249,4 +249,26 @@ public class BinaryTree {
 
         System.out.println(".");
     }
+
+    public void printRootToLeafPaths(int target) {
+        this.printRootToLeafPaths(this.root, 0, "", target);
+    }
+
+    private void printRootToLeafPaths(Node node, int sumSofar, String pathSoFar, int target) {
+        if(node == null) {
+            return;
+        }
+
+        if (node.left == null &&node.right == null) { // when you reach a leaf node
+            if (sumSofar + node.data < target) { // add the leaf data first and check if it is still less than target
+                System.out.println(pathSoFar + " " + node.data); // if so, print the path
+            }
+            return;
+        }
+
+        // faith call to left subtree
+        printRootToLeafPaths(node.left, sumSofar + node.data, pathSoFar + " -> " + node.data, target);
+        // faith call to right subtree
+        printRootToLeafPaths(node.right, sumSofar + node.data, pathSoFar + " -> " + node.data, target);
+    }
 }
