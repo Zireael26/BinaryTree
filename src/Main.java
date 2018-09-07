@@ -19,5 +19,6 @@ public class Main {
         binaryTree.preOrderTraversal();
         binaryTree.postOrderTraversal();
         binaryTree.inOrderTraversal();
+        binaryTree.levelOrderTraversal();
     }
 }

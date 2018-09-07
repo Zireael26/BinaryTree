@@ -1,3 +1,4 @@
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class BinaryTree {
@@ -219,5 +220,33 @@ public class BinaryTree {
         inOrderTraversal(node.left);         // Left
         System.out.print(node.data + ", ");  // Node
         inOrderTraversal(node.right);        // Right
+    }
+
+    // BFS in graphs
+    // 3 Step process
+    // Remove from queue, Print, Enqueue its children
+    public void levelOrderTraversal() {
+        this.levelOrderTraversal(this.root);
+    }
+
+    // Iterative Algorithm
+    private void levelOrderTraversal(Node node) {
+        LinkedList<Node> queue = new LinkedList<>();
+
+        queue.addLast(node);
+
+        while (!queue.isEmpty()) {
+            Node removedNode = queue.removeFirst();     // Step 1
+            System.out.print(removedNode.data + ", ");  // Step 2
+
+            if (removedNode.left != null) {             // Step 3
+                queue.addLast(removedNode.left);
+            }
+            if (removedNode.right != null) {             // Step 3
+                queue.addLast(removedNode.right);
+            }
+        }
+
+        System.out.println(".");
     }
 }
