@@ -159,4 +159,65 @@ public class BinaryTree {
 
         return false;
     }
+
+    // Pre-Order traversal can be thought of in 3 ways
+    // Node-Left-Right
+    // Print while going into recursion
+    // Euler-left path
+    // Root will be the first item
+    public void preOrderTraversal() {
+        this.preOrderTraversal(this.root);
+        System.out.println(".");
+    }
+
+    private void preOrderTraversal(Node node) {
+        if (node == null) { // when there are no children (leaf-node), return
+            return;
+        }
+
+        // faith calls for subtrees
+        System.out.print(node.data + ", "); // Node
+        preOrderTraversal(node.left);         // Left
+        preOrderTraversal(node.right);        // Right
+    }
+
+    // Post-Order traversal is like
+    // Left-Right-Node
+    // Print while coming out of recursion
+    // Euler-right path
+    // Root will be last
+    public void postOrderTraversal() {
+        this.postOrderTraversal(this.root);
+        System.out.println(".");
+    }
+
+    private void postOrderTraversal(Node node) {
+        if (node == null) {
+            return;
+        }
+
+        // faith calls for subtrees
+        postOrderTraversal(node.left);      // Left
+        postOrderTraversal(node.right);     // Right
+        System.out.print(node.data + ", "); // Node
+    }
+
+    // In-Order Traversal is like
+    // Left-Node-Right
+    // Root will be in the middle
+    public void inOrderTraversal() {
+        this.inOrderTraversal(this.root);
+        System.out.println(".");
+    }
+
+    private void inOrderTraversal(Node node) {
+        if(node == null) {
+            return;
+        }
+
+        // faith calls for subtrees
+        inOrderTraversal(node.left);         // Left
+        System.out.print(node.data + ", ");  // Node
+        inOrderTraversal(node.right);        // Right
+    }
 }

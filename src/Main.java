@@ -13,8 +13,11 @@ public class Main {
         System.out.println("Calculated Size: " + binaryTree.getSize());
         System.out.println("Maximum element of the entered tree is: " + binaryTree.max());
         System.out.println("Height of the Binary tree is: " + binaryTree.height());
-        System.out.print("Enter the element you wish to search for: " );
-        int key = scan.nextInt();
-        System.out.println("\nElement found: " + binaryTree.find(key));
+//        System.out.print("Enter the element you wish to search for: " );
+//        int key = scan.nextInt();
+//        System.out.println("\nElement found: " + binaryTree.find(key));
+        binaryTree.preOrderTraversal();
+        binaryTree.postOrderTraversal();
+        binaryTree.inOrderTraversal();
     }
 }
