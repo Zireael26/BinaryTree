@@ -486,4 +486,106 @@ public class BinaryTree {
         // faith call to right subtree
         printRootToLeafPaths(node.right, sumSofar + node.data, pathSoFar + " -> " + node.data, target);
     }
+
+    public int diameter() {
+        return this.diameter(this.root);
+    }
+
+    // calculates the maximum distance / distance between two farthest nodes of the tree
+    private int diameter(Node node) {
+        if (node == null) {
+            return 0;
+        }
+
+        int leftDiameter = this.diameter(node.left); // distance between farthest nodes in left subtree
+        int rightDiameter = this.diameter(node.right); // distance between farthest nodes in right subtree
+
+        // these height function calls make the complexity to O(n^2) because the previous diameter function calls
+        // are already causing euler traversal, on each element of which, height function makes another full euler traversal
+        int leftHeight = this.height(node.left);       // max height of left subtree
+        int rightHeight = this.height(node.right);     // max height of right subtree
+        int factorThroughRoot = leftHeight + rightHeight + 2; // distance between farthest nodes across left and right tree, through root
+
+        return Math.max(Math.max(leftDiameter, rightDiameter), factorThroughRoot);
+    }
+
+    private class DiaPair{
+        int height;
+        int diameter;
+    }
+
+    // diameter improved
+    public int diameter2() {
+        return this.diameter2(this.root).diameter;
+    }
+
+    private DiaPair diameter2(Node node) {
+        if (node == null) { // all magic of O(n^2) to O(n) is here in the base case, as in a single call, both height and diameter are calculated
+            DiaPair basePair = new DiaPair();
+            basePair.height = -1;
+            basePair.diameter = 0;
+            return basePair;
+        }
+        DiaPair leftPair = this.diameter2(node.left);   //  left call of faith
+        DiaPair rightPair = this.diameter2(node.right); //  right call of faith
+
+        DiaPair myPair = new DiaPair();
+        myPair.height = Math.max(leftPair.height, rightPair.height) + 1;
+        myPair.diameter = Math.max(leftPair.height + rightPair.height + 2, Math.max(leftPair.diameter, rightPair.diameter));
+
+        return myPair;
+    }
+
+    //
+    public boolean isBalanced() {
+        return this.isBalanced(this.root);
+    }
+
+    // the rule for being balanced is if both left and right nodes are balanced and if absolute difference of node heights is <=1
+    private boolean isBalanced(Node node) {
+        if (node == null) {
+            return true;
+        }
+
+        boolean isLeftBalanced = this.isBalanced(node.left);
+        boolean isRightBalanced = this.isBalanced(node.right);
+
+        int leftHeight = this.height(node.left);
+        int rightHeight = this.height(node.right);
+
+        if (isLeftBalanced && isRightBalanced && (Math.abs(leftHeight - rightHeight) <= 1)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private class BalPair{
+        boolean isBalanced;
+        int height;
+    }
+
+    public boolean isBalanced2() {
+        return this.isBalanced2(this.root).isBalanced;
+    }
+
+    // Best possible complexity
+    private BalPair isBalanced2(Node node) {
+        if (node == null) {
+            BalPair basePair = new BalPair();
+            basePair.isBalanced = true;
+            basePair.height = -1;
+            return basePair;
+        }
+
+        BalPair leftPair = this.isBalanced2(node.left);
+        BalPair rightPair = this.isBalanced2(node.right);
+
+        BalPair myPair = new BalPair();
+        myPair.height = Math.max(leftPair.height, rightPair.height) + 1;
+        myPair.isBalanced = (leftPair.isBalanced && rightPair.isBalanced &&
+                (Math.abs(leftPair.height - rightPair.height) <= 1) );
+
+        return myPair;
+    }
 }

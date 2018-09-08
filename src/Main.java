@@ -31,6 +31,12 @@ public class Main {
 
         System.out.println(binaryTree.rootToNodePath(12));
 
+        System.out.println("\nThe diameter is: " + binaryTree.diameter());
+        System.out.println("\nThe diameter is: " + binaryTree.diameter2());
+
+        System.out.println("Tree balanced: " + binaryTree.isBalanced());
+        System.out.println("Tree balanced: " + binaryTree.isBalanced2());
+
         // print all nodes at distance 3 from the node with data 9
         binaryTree.printKFar(9, 3);
 
