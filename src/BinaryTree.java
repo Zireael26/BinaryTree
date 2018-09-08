@@ -325,6 +325,75 @@ public class BinaryTree {
         return new ArrayList<>();               // if not found, return empty ArrayList
     }
 
+    // prints all nodes at 'k' distance from given node
+    public void printKFar(int data, int k) {
+        ArrayList<Node> path = this.rootToNodePathAsNodes(this.root, data);
+        // the path obtained above will be [ node, ..., root ]
+        // so path.get(0) will have the node itself and the last element in the ArrayList path will be the root
+
+        for (int i = 0; (i < path.size()) && (i <= k); i++) {
+            if (i == 0) {                   // for the node itself
+                printKDown(path.get(0) ,k); // simply use printKDown
+            } else if (i == k){                       // if i == k, then we don't need to look for its children,
+                System.out.println(path.get(i).data); // this node is already 'k' far from starting node, so print data
+            } else {
+                Node currNode = path.get(i);       // we get current and previous both to see that we don't
+                Node prevNode = path.get(i - 1);   // use printKDown on a path that already includes the current node
+
+                if (currNode.left == prevNode) {  // if the current node is left, call printKDown on the right node with k-1
+                    printKDown(currNode.right, k - i - 1); // i denotes how far the node is from the starting node
+                } else {                          // else call printKDown on the left node with k-1
+                    printKDown(currNode.left, k - i - 1);
+                }
+            }
+
+        }
+
+    }
+
+    // prints all nodes below it at 'k' distance from given node
+    private void printKDown(Node node, int k) {
+        if (k < 0 || node == null) {
+            return;
+        }
+
+        if (k == 0) {
+            System.out.println(node.data);
+            return;
+        }
+
+        printKDown(node.left, k - 1);
+        printKDown(node.right, k - 1);
+    }
+
+    // Copy of rootToNodePath that returns an ArrayList of nodes instead of integers
+    private ArrayList<Node> rootToNodePathAsNodes(Node node, int target) {
+        if (node == null) { // base case, a null node will return a new, empty ArrayList
+            return new ArrayList<>();
+        }
+
+        if (node.data == target) { // if found, then return the path by adding the data to the ArrayList
+            ArrayList<Node> path = new ArrayList<>();
+            path.add(node);
+            return path;
+        }
+
+        // faith call to left child
+        ArrayList<Node> pathFromLeftChild = this.rootToNodePathAsNodes(node.left, target);
+        if (pathFromLeftChild.size() > 0) { // if there is a path that exists, then the ArrayList should be non-empty
+            pathFromLeftChild.add(node);  // add current node to the path
+            return pathFromLeftChild;          // return it
+        }
+
+        ArrayList<Node> pathFromRightChild = this.rootToNodePathAsNodes(node.right, target);
+        if (pathFromRightChild.size() > 0) { // if there is a path that exists, then the ArrayList should be non-empty
+            pathFromRightChild.add(node);  // add current node to the path
+            return pathFromRightChild;          // return it
+        }
+
+        return new ArrayList<>();               // if not found, return empty ArrayList
+    }
+
     public void printRootToLeafPaths(int target) {
         this.printRootToLeafPaths(this.root, 0, "", target);
     }
