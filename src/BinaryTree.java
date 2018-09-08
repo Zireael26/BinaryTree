@@ -24,11 +24,46 @@ public class BinaryTree {
         this.root = this.takeInput(scn, null, false);
     }
 
-//    private Node construct(Scanner scn,Node parent, boolean isLeftChild) {
-//        if (isLeftChild) {
-//
-//        }
-//    }
+    public BinaryTree (int[] preOrder, int[] inOrder) {
+        this.root = this.construct(preOrder, 0, preOrder.length - 1, inOrder, 0, inOrder.length - 1);
+        this.size = preOrder.length;
+    }
+
+    // expectation -  we will get a tree from preOrder and inOrder arrays
+    // all indices are inclusive
+    private Node construct(int[] preOrder, int preStartIdx, int preLastIdx,
+                           int[] inOrder, int inStartIdx, int inLastIdx) {
+
+        if (preStartIdx > preLastIdx || inStartIdx > inLastIdx) {
+            return null;
+        }
+
+        Node node = new Node(0, null, null);
+        node.data = preOrder[preStartIdx];   // root data will be the start index of preOrder
+
+        int rootIdx = -1;   // To search the index of root node (found at start index of preOrder) in inOrder to separate left and right subtrees
+        for (rootIdx = inStartIdx; rootIdx <= inLastIdx; rootIdx++) {
+            if (preOrder[preStartIdx] == inOrder[rootIdx]) {
+                break;  // We now have the index of root inside our inOrder Traversal array
+                        // all items to its left are the left subtree, all items to its right are the right subtree
+            }
+        }               // rootIdx now contains the index of root in the inOrder Array
+
+        // inside the inOrder array
+        // left side will start at inStartIdx and end at rootIdx - 1
+        // right side will start at rootIdx + 1 and end at inLastIdx
+
+        // inside the preOrder Array
+        // left side will start at preStartIdx + 1 and end at preStartIdx + numElemLeft
+        // right side will start at preStartIdx + numElemLeft + 1 and end at preLastIdx
+        int numElemLeft = rootIdx - inStartIdx;
+        node.left = construct(preOrder, preStartIdx + 1, preLastIdx + numElemLeft,
+                inOrder, inStartIdx, rootIdx - 1);
+        node.right = construct(preOrder, preStartIdx + numElemLeft + 1, preLastIdx,
+                inOrder, rootIdx + 1, inLastIdx);
+
+        return node;
+    }
 
     private Node takeInput(Scanner scn, Node parent, boolean isLeftChild) {
         if (parent == null){
