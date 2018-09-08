@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -291,6 +292,37 @@ public class BinaryTree {
 
         this.removeLeafNodes(child, child.left);  // recursive call to left subtree
         this.removeLeafNodes(child, child.right); // recursive call to right subtree
+    }
+
+    public ArrayList<Integer> rootToNodePath(int target) {
+        return this.rootToNodePath(this.root, target);
+    }
+
+    private ArrayList<Integer> rootToNodePath(Node node, int target) {
+        if (node == null) { // base case, a null node will return a new, empty ArrayList
+            return new ArrayList<>();
+        }
+
+        if (node.data == target) { // if found, then return the path by adding the data to the ArrayList
+            ArrayList<Integer> path = new ArrayList<>();
+            path.add(node.data);
+            return path;
+        }
+
+        // faith call to left child
+        ArrayList<Integer> pathFromLeftChild = this.rootToNodePath(node.left, target);
+        if (pathFromLeftChild.size() > 0) { // if there is a path that exists, then the ArrayList should be non-empty
+            pathFromLeftChild.add(node.data);  // add current node to the path
+            return pathFromLeftChild;          // return it
+        }
+
+        ArrayList<Integer> pathFromRightChild = this.rootToNodePath(node.right, target);
+        if (pathFromRightChild.size() > 0) { // if there is a path that exists, then the ArrayList should be non-empty
+            pathFromRightChild.add(node.data);  // add current node to the path
+            return pathFromRightChild;          // return it
+        }
+
+        return new ArrayList<>();               // if not found, return empty ArrayList
     }
 
     public void printRootToLeafPaths(int target) {

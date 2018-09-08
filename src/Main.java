@@ -28,6 +28,8 @@ public class Main {
         System.out.println();
         binaryTree.printRootToLeafPaths(200);
 
+        System.out.println(binaryTree.rootToNodePath(12));
+
         System.out.println("******* Displaying after removing leaf nodes *********");
         binaryTree.removeLeafNodes();
         binaryTree.display();
