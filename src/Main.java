@@ -27,6 +27,10 @@ public class Main {
         binaryTree.printSingleChild();
         System.out.println();
         binaryTree.printRootToLeafPaths(200);
+
+        System.out.println("******* Displaying after removing leaf nodes *********");
+        binaryTree.removeLeafNodes();
+        binaryTree.display();
     }
 
     // Print n binaries upto n

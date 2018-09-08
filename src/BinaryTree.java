@@ -266,8 +266,31 @@ public class BinaryTree {
             System.out.print(child.data + " "); // and then print this child, if its true
         }
 
-        printSingleChild(child, child.left);   // faith call to left subtree
-        printSingleChild(child, child.right);  // faith call to right subtree
+        this.printSingleChild(child, child.left);   // faith call to left subtree
+        this.printSingleChild(child, child.right);  // faith call to right subtree
+    }
+
+    public void removeLeafNodes() {
+        this.removeLeafNodes(this.root, this.root.left);
+        this.removeLeafNodes(this.root, this.root.right);
+    }
+
+    private void removeLeafNodes(Node parent, Node child) {
+        if (child == null) { // when child be null, just return because null.left and null.right ain't a thing
+            return;
+        }
+
+        if (child.left == null && child.right == null) { // if child is a leaf node
+           if (parent.left == child) { // then find out if its the left child or the right child
+               parent.left = null;     // and remove it accordingly
+           } else {
+               parent.right = null;
+           }
+           return; // since we have removed the leaf, lets return from here
+        }
+
+        this.removeLeafNodes(child, child.left);  // recursive call to left subtree
+        this.removeLeafNodes(child, child.right); // recursive call to right subtree
     }
 
     public void printRootToLeafPaths(int target) {
