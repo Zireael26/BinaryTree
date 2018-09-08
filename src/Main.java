@@ -42,7 +42,7 @@ public class Main {
         int[] inO = {12, 20, 25, 30, 37, 50, 62, 75, 87};
         int[] postO = {20, 12, 30, 37, 25, 62, 87, 75, 50};
         System.out.println("*****************************************");
-        BinaryTree constructedTree = new BinaryTree(preO, inO);
+        BinaryTree constructedTree = new BinaryTree(inO, postO);
         constructedTree.display();
     }
 
