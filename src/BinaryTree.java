@@ -76,6 +76,7 @@ public class BinaryTree {
         if(node == null) { // if there are no children, return
             return;
         }
+
         String outputString = "";
         outputString += node.left != null ? node.left.data:"."; // if node.left is not null, add data to string, else add full stop
         outputString += " -> " + node.data + " <- ";
@@ -83,7 +84,7 @@ public class BinaryTree {
 
         System.out.println(outputString);
 
-        this.display(node.left); //faith in left child
+        this.display(node.left); // faith in left child
         this.display(node.right); // faith in right child
     }
 
@@ -250,6 +251,25 @@ public class BinaryTree {
         System.out.println(".");
     }
 
+    public void printSingleChild() {
+        this.printSingleChild(this.root, this.root.left);
+        this.printSingleChild(this.root, this.root.right);
+    }
+
+    private void printSingleChild(Node parent, Node child) {
+        if (child == null) {
+            return;
+        }
+
+        if ((parent.left == child && parent.right == null) // to check if the child is a single child, we see if
+                || (parent.right == child && parent.left == null)) { // the parent's other child is null
+            System.out.print(child.data + " "); // and then print this child, if its true
+        }
+
+        printSingleChild(child, child.left);   // faith call to left subtree
+        printSingleChild(child, child.right);  // faith call to right subtree
+    }
+
     public void printRootToLeafPaths(int target) {
         this.printRootToLeafPaths(this.root, 0, "", target);
     }
@@ -261,7 +281,7 @@ public class BinaryTree {
 
         if (node.left == null &&node.right == null) { // when you reach a leaf node
             if (sumSofar + node.data < target) { // add the leaf data first and check if it is still less than target
-                System.out.println(pathSoFar + " " + node.data); // if so, print the path
+                System.out.println(pathSoFar + " -> " + node.data); // if so, print the path
             }
             return;
         }

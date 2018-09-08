@@ -17,16 +17,19 @@ public class Main {
         System.out.print("Enter the element you wish to search for: " );
         int key = scan.nextInt();
         System.out.println("\nElement found: " + binaryTree.find(key));
+
         binaryTree.preOrderTraversal();
         binaryTree.postOrderTraversal();
         binaryTree.inOrderTraversal();
         binaryTree.levelOrderTraversal();
         printBinaries(15);
 
+        binaryTree.printSingleChild();
+        System.out.println();
         binaryTree.printRootToLeafPaths(200);
     }
 
-    // Print n=binaries upto n
+    // Print n binaries upto n
     private static class Pair{
         int n;
         String binary;
