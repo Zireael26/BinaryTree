@@ -591,10 +591,14 @@ public class BinaryTree {
         boolean isBST;
         int min;
         int max;
+        Node largestBSTRoot;
+        int largestBSTSize;
     }
     // the rule is that the root must be larger than all elements to its left and larger than all elements to its right
     public boolean isBST() {
-        return this.isBST(this.root).isBST;
+        BSTPair largestBST = this.isBST(this.root);
+        System.out.println(largestBST.largestBSTRoot.data + " <- Largest BST Root | Size -> " + largestBST.largestBSTSize);
+        return largestBST.isBST;
     }
 
     // so we can simplify it as root must be larger than largest element of left and smaller than smallest of right
@@ -604,6 +608,8 @@ public class BinaryTree {
             basePair.isBST = true;
             basePair.min = Integer.MAX_VALUE;
             basePair.max = Integer.MIN_VALUE;
+            basePair.largestBSTRoot = null;
+            basePair.largestBSTSize = 0;
             return basePair;
         }
 
@@ -615,6 +621,19 @@ public class BinaryTree {
         myPair.isBST = leftPair.isBST && rightPair.isBST && (node.data >= leftPair.max) && (node.data <= rightPair.min);
         myPair.max = Math.max(node.data, Math.max(leftPair.max, rightPair.max));
         myPair.min = Math.min(node.data, Math.min(leftPair.min, rightPair.min));
+
+        if (myPair.isBST){ // if I am a BST, then my children can't possibly be bigger BSTs than me, so
+            myPair.largestBSTRoot = node;     // my root = largestBSTRoot
+            myPair.largestBSTSize = leftPair.largestBSTSize + rightPair.largestBSTSize + 1;  // my size
+        } else { // if I'm not a BST myself, then larger of my two children will set the value
+            if (leftPair.largestBSTSize > rightPair.largestBSTSize) {
+                myPair.largestBSTRoot = leftPair.largestBSTRoot;
+                myPair.largestBSTSize = leftPair.largestBSTSize;
+            } else {
+                myPair.largestBSTRoot = rightPair.largestBSTRoot;
+                myPair.largestBSTSize = rightPair.largestBSTSize;
+            }
+        }
 
         return myPair;
     }
