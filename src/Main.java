@@ -40,18 +40,18 @@ public class Main {
         // print all nodes at distance 3 from the node with data 9
         binaryTree.printKFar(9, 3);
 
-//        System.out.println("******* Displaying after removing leaf nodes *********");
-//        binaryTree.removeLeafNodes();
-//        binaryTree.display();
+        System.out.println("******* Displaying after removing leaf nodes *********");
+        binaryTree.removeLeafNodes();
+        binaryTree.display();
 
         int[] preO = {50, 25, 12, 20, 37, 30, 75, 62, 87};
         int[] inO = {12, 20, 25, 30, 37, 50, 62, 75, 87};
         int[] postO = {20, 12, 30, 37, 25, 62, 87, 75, 50};
         System.out.println("*****************************************");
-        BinaryTree constructedTree = new BinaryTree(preO, inO);
+        BinaryTree constructedTree = new BinaryTree(inO, postO);
         constructedTree.display();
 
-        System.out.println("is BST? :" + binaryTree.isBST());
+        System.out.println("is BST? :" + constructedTree.isBST());
     }
 
     // Print n binaries upto n
