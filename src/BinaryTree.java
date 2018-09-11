@@ -637,4 +637,30 @@ public class BinaryTree {
 
         return myPair;
     }
+
+    public void trimBST(int min, int max) {
+        Node rootNode = this.trimBST(this.root, min, max);
+        this.root = rootNode;
+        this.size = this.getSize();
+    }
+
+    private Node trimBST(Node node, int min, int max) {
+        if (node == null) { // base case, return
+            return null;
+        }
+
+        node.left = this.trimBST(node.left, min, max);    // trim the left child
+        node.right = this.trimBST(node.right, min, max);  // trim the right child
+
+        // trim my own node
+        if (node.data < min) {  // if my data is less than the min value, I will return my right child
+            return node.right;
+        }
+
+        if (node.data > max) { // if my data is more than the max value, I shall return my left chill
+            return node.left;
+        }
+        // if both of the above conditions aren't true, I will return myself
+        return node;
+    }
 }

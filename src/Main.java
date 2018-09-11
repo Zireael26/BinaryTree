@@ -52,6 +52,8 @@ public class Main {
         constructedTree.display();
 
         System.out.println("is BST? :" + constructedTree.isBST());
+        constructedTree.trimBST(20, 100);
+        constructedTree.display();
     }
 
     // Print n binaries upto n
