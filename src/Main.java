@@ -41,8 +41,8 @@ public class Main {
         binaryTree.printKFar(9, 3);
 
         System.out.println("******* Displaying after removing leaf nodes *********");
-        binaryTree.removeLeafNodes();
-        binaryTree.display();
+//        binaryTree.removeLeafNodes();
+//        binaryTree.display();
 
         int[] preO = {50, 25, 12, 20, 37, 30, 75, 62, 87};
         int[] inO = {12, 20, 25, 30, 37, 50, 62, 75, 87};
@@ -52,8 +52,11 @@ public class Main {
         constructedTree.display();
 
         System.out.println("is BST? :" + constructedTree.isBST());
-        constructedTree.trimBST(20, 100);
+//        constructedTree.trimBST(20, 100);
         constructedTree.display();
+
+//        System.out.println("Cousin sum for 20: " + constructedTree.cousinSum(20));
+        System.out.println("Cousin sum for 7: " + binaryTree.cousinSum(7));
     }
 
     // Print n binaries upto n

@@ -654,13 +654,86 @@ public class BinaryTree {
 
         // trim my own node
         if (node.data < min) {  // if my data is less than the min value, I will return my right child
-            return node.right;
+            return node.right;  // because we know that in a BST right child is greater than root
         }
 
         if (node.data > max) { // if my data is more than the max value, I shall return my left chill
-            return node.left;
+            return node.left;  // because we know that in a BST, left child is smaller than root
         }
         // if both of the above conditions aren't true, I will return myself
         return node;
+    }
+
+    // method to return cousin sum of a node in a binary tree
+    public int cousinSum(int data) {
+        return this.cousinSum(this.root, data);
+    }
+
+    // the main difference in concept from printKFar is that in printKFar 'i' is a factor of distance from the node
+    // and we call printKDown with smaller value, the farther it is. But here, the farther it is, the larger is the
+    // value of K while calling getKDown so as to always reach the same level of nodes as the original node, for which
+    // we are finding the cousin.
+    // so for example, if it is nodes away on the path, getKDown is called to get 5 nodes below on the other side of the
+    // current node, so it will always get cousins
+
+    private int cousinSum(Node node, int data) {
+        ArrayList<Node> path = this.rootToNodePathAsNodes(node, data);  // Step 1 : Get root to node path
+        // this path is like [node, ......, root]
+        int k = path.size() - 1;          // this is basically the depth of the given node
+
+        ArrayList<Integer> cousins = new ArrayList<>();     // ArrayList of integers to store all cousins
+
+        // this loop runs from root towards node
+        for (int i = 0; i < (k - 1); i++) {  // stopping condition is i < (k-1) so the max this loop can reach
+                                             // is the node's grandparent and parent pair in currNode and prevNode
+            Node currNode = path.get(k - i);        // starts with root, goes till grandparent of node
+            Node prevNode = path.get(k - i - 1);    // starts with second last item on path, goes till parent of node
+
+            if (currNode.left == prevNode) {    // same logic as printKFar, if previous node is path,
+                                                // call getKDown on other child
+                cousins = getKDown(currNode.right, k - i - 1);
+            } else {
+                cousins = getKDown(currNode.left, k - i - 1);
+            }
+        }
+
+        // add all numbers from the cousins ArrayList to the sum variable
+        int sum = 0;
+        if (cousins.isEmpty()) { // if its empty, return -1
+            sum = -1;
+        } else {
+            for(int cousin : cousins) {
+                sum += cousin;
+            }
+        }
+
+        return sum;
+    }
+
+    // similar to printKDown, but returns an ArrayList of int
+    private ArrayList<Integer> getKDown(Node node, int k) {
+        if (node == null) {
+            return new ArrayList<>();
+        }
+
+        if (k == 0) {
+            ArrayList<Integer> baseList = new ArrayList<>();
+            baseList.add(node.data);
+            return baseList;
+        }
+
+        ArrayList<Integer> leftList = getKDown(node.left, k-1);
+        ArrayList<Integer> rightList = getKDown(node.right, k-1);
+
+        if (!leftList.isEmpty() && !rightList.isEmpty()) { // if both ArrayLists are non-empty, join them and return the joint list
+            leftList.addAll(rightList);
+            return leftList;
+        } else if (leftList.size() != 0) {  // if one is empty, return the other list
+            return leftList;
+        }  else if (rightList.size() != 0) {
+            return rightList;
+        } else {                            // otherwise, if both lists are empty, return a new ArrayList
+            return new ArrayList<>();
+        }
     }
 }
