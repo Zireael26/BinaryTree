@@ -55,7 +55,7 @@ public class Main {
 //        constructedTree.trimBST(20, 100);
         constructedTree.display();
 
-//        System.out.println("Cousin sum for 20: " + constructedTree.cousinSum(20));
+        System.out.println("Cousin sum for 25: " + constructedTree.cousinSum(25));
         System.out.println("Cousin sum for 7: " + binaryTree.cousinSum(7));
     }
 

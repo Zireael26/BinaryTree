@@ -684,17 +684,18 @@ public class BinaryTree {
         ArrayList<Integer> cousins = new ArrayList<>();     // ArrayList of integers to store all cousins
 
         // this loop runs from root towards node
-        for (int i = 0; i < (k - 1); i++) {  // stopping condition is i < (k-1) so the max this loop can reach
-                                             // is the node's grandparent and parent pair in currNode and prevNode
+        for (int i = 0; (k==1)?(i<k):i<(k - 1); i++) {  // stopping condition is i < (k-1) so the max this loop can reach
+            // is the node's grandparent and parent pair in currNode and prevNode
             Node currNode = path.get(k - i);        // starts with root, goes till grandparent of node
             Node prevNode = path.get(k - i - 1);    // starts with second last item on path, goes till parent of node
 
             if (currNode.left == prevNode) {    // same logic as printKFar, if previous node is path,
-                                                // call getKDown on other child
+                // call getKDown on other child
                 cousins = getKDown(currNode.right, k - i - 1);
             } else {
                 cousins = getKDown(currNode.left, k - i - 1);
             }
+
         }
 
         // add all numbers from the cousins ArrayList to the sum variable
