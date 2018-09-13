@@ -40,9 +40,10 @@ public class Main {
         // print all nodes at distance 3 from the node with data 9
         binaryTree.printKFar(9, 3);
 
-        System.out.println("******* Displaying after removing leaf nodes *********");
+//        System.out.println("******* Displaying after removing leaf nodes *********");
 //        binaryTree.removeLeafNodes();
 //        binaryTree.display();
+        System.out.println("LCA of 4 and 9 is: " + binaryTree.lowestCommonAncestor(4, 9));
 
         int[] preO = {50, 25, 12, 20, 37, 30, 75, 62, 87};
         int[] inO = {12, 20, 25, 30, 37, 50, 62, 75, 87};

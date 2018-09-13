@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -736,5 +737,23 @@ public class BinaryTree {
         } else {                            // otherwise, if both lists are empty, return a new ArrayList
             return new ArrayList<>();
         }
+    }
+
+    // returns the Lowest Common Ancestor of two nodes
+    public int lowestCommonAncestor(int data1, int data2) {
+        ArrayList<Integer> path1 = rootToNodePath(data1);
+        ArrayList<Integer> path2 = rootToNodePath(data2);
+
+        int ancestor = -1;
+
+        for (int i = 0; i < Math.min(path1.size(), path2.size()); i++) {
+            if (path1.get(path1.size() - i - 1).equals(path2.get(path2.size() - i - 1))) {
+                ancestor = path1.get(path1.size() - i - 1);
+            } else {
+                return ancestor;
+            }
+        }
+
+        return ancestor;
     }
 }
