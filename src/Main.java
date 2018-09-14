@@ -23,11 +23,13 @@ public class Main {
         binaryTree.postOrderTraversal();
         binaryTree.inOrderTraversal();
         binaryTree.levelOrderTraversal();
+        binaryTree.levelOrderRecursive();
         printBinaries(15);
 
         System.out.println("*************** No of subtrees with target sum *************");
         System.out.println(binaryTree.countSubtreeUptoSum(13));
-
+        binaryTree.printLeftView();
+        binaryTree.printLeftView2();
         System.out.println("************************************************************");
         binaryTree.printSingleChild();
         System.out.println();

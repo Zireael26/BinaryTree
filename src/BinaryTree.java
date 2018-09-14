@@ -1,7 +1,5 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.Scanner;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class BinaryTree {
 
@@ -322,6 +320,31 @@ public class BinaryTree {
         }
 
         System.out.println(".");
+    }
+
+    public void levelOrderRecursive() {
+        ArrayList<Node> rootNodeAsList = new ArrayList<>(); // we make a new ArrayList of Node(s)
+        rootNodeAsList.add(this.root);      // and we add the root node to it
+        this.levelOrderRecursive(rootNodeAsList);
+        System.out.println(".");
+    }
+
+    // this is a recursive implementation of level order traversal of a binary tree
+    private void levelOrderRecursive(ArrayList<Node> levelList) {
+        ArrayList<Node> nextLevel = new ArrayList<>(); // make a new ArrayList of nodes to pass for recursive call
+        for (Node node:levelList){ // on the received list, run a loop and add all its children to the list for next level
+            System.out.print(node.data + ", ");
+            if (node.left != null) {
+                nextLevel.add(node.left);
+            }
+            if (node.right != null) {
+                nextLevel.add(node.right);
+            }
+        }
+
+        if (!nextLevel.isEmpty()) {
+            this.levelOrderRecursive(nextLevel);
+        }
     }
 
     public void printSingleChild() {
@@ -860,5 +883,66 @@ public class BinaryTree {
     private class TreeCounter {
         int sum = 0;
         int count = 0;
+    }
+
+    public void printLeftView() {
+        this.printLeftView(this.root);
+    }
+
+    private void printLeftView(Node node) {
+        ArrayList<Integer> preO = new ArrayList<>();
+        ArrayList<Integer> floorO = new ArrayList<>();
+
+        preOTraversalAsSV(node, preO, floorO, 0);
+        int[] floorCount = new int[this.size()];
+
+        System.out.println(preO);
+        System.out.println(floorO);
+
+        for (int i = 0; i < floorO.size(); i++) {
+            floorCount[floorO.get(i)] += 1;
+            if (floorCount[floorO.get(i)] == 1) {
+                System.out.print(preO.get(i) + " ");
+            }
+        }
+        System.out.println();
+    }
+
+
+    private void preOTraversalAsSV(Node node, ArrayList<Integer> preO, ArrayList<Integer> floorO, int floor) {
+        if (node == null) { // when there are no children (leaf-node), return
+            return;
+        }
+
+        // faith calls for subtrees
+        preO.add(node.data);
+        floorO.add(floor);
+        preOTraversalAsSV(node.left, preO, floorO, floor + 1);         // Left
+        preOTraversalAsSV(node.right, preO, floorO, floor + 1);        // Right
+    }
+
+    public void printLeftView2() {
+        ArrayList<Node> rootNodeAsList = new ArrayList<>();
+        rootNodeAsList.add(this.root);
+        this.printLeftView2(rootNodeAsList);
+    }
+
+    private void printLeftView2(ArrayList<Node> level) {
+        System.out.print(level.get(0).data + " -> ");
+        ArrayList<Node> nextLevel = new ArrayList<>();
+
+        for (Node node: level) {
+            if (node.left != null){
+                nextLevel.add(node.left);
+            }
+            if (node.right != null){
+                nextLevel.add(node.right);
+            }
+        }
+        if (!nextLevel.isEmpty()) {
+            printLeftView2(nextLevel);
+        }
+
+        System.out.println();
     }
 }
