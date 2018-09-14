@@ -473,7 +473,7 @@ public class BinaryTree {
             return;
         }
 
-        if (node.left == null &&node.right == null) { // when you reach a leaf node
+        if (node.left == null && node.right == null) { // when you reach a leaf node
             if (sumSofar + node.data < target) { // add the leaf data first and check if it is still less than target
                 System.out.println(pathSoFar + " -> " + node.data); // if so, print the path
             }
@@ -827,5 +827,38 @@ public class BinaryTree {
         preO.add(node.data); // Node
         preOTraversalAsAL(node.left, preO);         // Left
         preOTraversalAsAL(node.right, preO);        // Right
+    }
+
+    // this function returns count of the number of subtrees whose sum is equal to target
+    public int countSubtreeUptoSum(int target) {
+        TreeCounter treeCounter = this.countSubtreeUptoSum(this.root, target);
+        return treeCounter.count;
+    }
+
+    private TreeCounter countSubtreeUptoSum(Node node, int targetSum) {
+        if (node == null) {
+            return new TreeCounter();
+        }
+
+        // left and right faith calls
+        TreeCounter leftTC = this.countSubtreeUptoSum(node.left, targetSum);
+        TreeCounter rightTC = this.countSubtreeUptoSum(node.right, targetSum);
+
+        // handling my own treeCounter object
+        TreeCounter myTC = new TreeCounter();
+        myTC.sum = node.data + leftTC.sum + rightTC.sum; // sum is sum of both subtrees and myself, to make a tree
+        if (myTC.sum == targetSum) { // if its equal, my count will increase by 1
+            myTC.count += 1;
+        } else {                     // else count = left count + right count
+            myTC.count = leftTC.count + rightTC.count;
+        }
+
+        return myTC; // return
+    }
+
+    // Custom class to keep both sum (to check against target) and count of the valid trees
+    private class TreeCounter {
+        int sum = 0;
+        int count = 0;
     }
 }

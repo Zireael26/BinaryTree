@@ -25,6 +25,10 @@ public class Main {
         binaryTree.levelOrderTraversal();
         printBinaries(15);
 
+        System.out.println("*************** No of subtrees with target sum *************");
+        System.out.println(binaryTree.countSubtreeUptoSum(13));
+
+        System.out.println("************************************************************");
         binaryTree.printSingleChild();
         System.out.println();
         binaryTree.printRootToLeafPaths(200);
