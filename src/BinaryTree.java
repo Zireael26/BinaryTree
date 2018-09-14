@@ -756,4 +756,34 @@ public class BinaryTree {
 
         return ancestor;
     }
+
+    public void printDiagonalSums() {
+        ArrayList<Integer> diagonalSums = new ArrayList<>(Collections.nCopies(this.size(), 0));
+        this.getDiagonalSums(this.root, 0, diagonalSums);
+        for (int sum : diagonalSums) {
+            if (sum == 0) {
+                return;
+            }
+            System.out.println("Sum : " + sum);
+        }
+    }
+
+    private void getDiagonalSums(Node node, int floor, ArrayList<Integer> sumList) {
+        if (node == null) {
+            return;
+        }
+
+        // the magic here is done by the floor variable, which is passed into recursion and basically increases only
+        // on a left traversal (which can separate vertical levels) but not on right recursive calls because that is
+        // on the same vertical level
+        int numToAdd = node.data;
+
+        getDiagonalSums(node.left, floor + 1, sumList); // increase floor to change the vertical level
+        numToAdd += sumList.get(floor);                       // use floor as index to indicate vertical level
+        sumList.set(floor, numToAdd);                         // add the value of node to the right index
+
+        getDiagonalSums(node.right, floor, sumList);          // don't increase floor, because the vertical level
+                                                              // is the same on a right call
+    }
+
 }

@@ -44,6 +44,7 @@ public class Main {
 //        binaryTree.removeLeafNodes();
 //        binaryTree.display();
         System.out.println("LCA of 4 and 9 is: " + binaryTree.lowestCommonAncestor(4, 9));
+        binaryTree.printDiagonalSums();
 
         int[] preO = {50, 25, 12, 20, 37, 30, 75, 62, 87};
         int[] inO = {12, 20, 25, 30, 37, 50, 62, 75, 87};
