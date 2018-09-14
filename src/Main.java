@@ -46,16 +46,20 @@ public class Main {
         System.out.println("LCA of 4 and 9 is: " + binaryTree.lowestCommonAncestor(4, 9));
         binaryTree.printDiagonalSums();
 
-        int[] preO = {50, 25, 12, 20, 37, 30, 75, 62, 87};
-        int[] inO = {12, 20, 25, 30, 37, 50, 62, 75, 87};
-        int[] postO = {20, 12, 30, 37, 25, 62, 87, 75, 50};
+
+
+        int[] preO = {25, 12, 20, 37, 30};
+        int[] inO = {12, 20, 25, 30, 37};
+        int[] postO = {20, 12, 30, 37, 25};
         System.out.println("*****************************************");
         BinaryTree constructedTree = new BinaryTree(inO, postO);
         constructedTree.display();
 
-        System.out.println("is BST? :" + constructedTree.isBST());
+        System.out.println(constructedTree.isSubTree(binaryTree));
+
+//        System.out.println("is BST? :" + constructedTree.isBST());
 //        constructedTree.trimBST(20, 100);
-        constructedTree.display();
+//        constructedTree.display();
 
         System.out.println("Cousin sum for 25: " + constructedTree.cousinSum(25));
         System.out.println("Cousin sum for 7: " + binaryTree.cousinSum(7));

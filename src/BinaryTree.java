@@ -786,4 +786,46 @@ public class BinaryTree {
                                                               // is the same on a right call
     }
 
+    public boolean isSubTree(BinaryTree tree) {
+        return this.isSubTree(this.root, tree);
+    }
+
+    private boolean isSubTree(Node node, BinaryTree tree) {
+        // get preOrder traversal of both trees
+        ArrayList<Integer> preOGiven = new ArrayList<>();
+        preOTraversalAsAL(tree.root, preOGiven);
+        ArrayList<Integer> preOThis = new ArrayList<>();
+        preOTraversalAsAL(node, preOThis);
+
+        // find the index of the root of our tree in given tree
+        int rootIdx = -1;
+        for (int j = 0; j < preOGiven.size(); j++) {
+            if (preOGiven.get(j).equals(this.root.data)){
+                rootIdx = j;
+                break;      // at this point, rootIdx contains the index of root in preOGiven ArrayList
+            }
+        }
+        if (rootIdx == -1) { // if root wasn't found in tree, return false
+            return false;
+        }
+        // simply compare the ith and (i+rootIdx)ith elements till the loop ends
+        for (int i = 0; i < preOThis.size(); i++) { // loop over our tree (subtree)
+            if (!preOGiven.get(i + rootIdx).equals(preOThis.get(i))) {  // if at any point, they are unequal, it means
+                return false;                                           // that our tree isn't a subtree of given tree
+            }
+        }
+        // if loop ends, it's a subtree, return true
+        return true;
+    }
+
+    // returns an ArrayList of a preOrderTraversal
+    private void preOTraversalAsAL(Node node, ArrayList<Integer> preO) {
+        if (node == null) { // when there are no children (leaf-node), return
+            return;
+        }
+        // faith calls for subtrees
+        preO.add(node.data); // Node
+        preOTraversalAsAL(node.left, preO);         // Left
+        preOTraversalAsAL(node.right, preO);        // Right
+    }
 }
