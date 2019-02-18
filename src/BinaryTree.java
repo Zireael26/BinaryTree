@@ -221,16 +221,9 @@ public class BinaryTree {
         }
 
         boolean foundInLeftChild = this.find(node.left, key); // faith that this call will find the key in left subtree
-        if (foundInLeftChild) {
-            return true;
-        }
-
         boolean foundInRightChild = this.find(node.right, key); // faith that this call will find the key in right subtree
-        if (foundInRightChild) {
-            return true;
-        }
 
-        return false;
+        return (foundInLeftChild || foundInRightChild);
     }
 
     // Pre-Order traversal can be thought of in 3 ways
