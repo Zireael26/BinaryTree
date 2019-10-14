@@ -14,7 +14,9 @@ public class BinaryTree {
             this.right = right;
         }
     }
-
+    
+    
+    
     private Node root;
     private int size;
 
